@@ -1,0 +1,39 @@
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+body {
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+.glassmorphism {
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  transition: all 0.3s ease-in-out;
+}
+  
+.glassmorphism:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 48px 0 rgba(31, 38, 135, 0.5);
+}
+
+.glassmorphism-button {
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transition: all 0.3s ease-in-out;
+}
+
+.glassmorphism-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+} 
