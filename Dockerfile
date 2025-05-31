@@ -1,44 +1,24 @@
-# Base image with Node.js 20.17.0 on Alpine Linux
-FROM node:20.17.0-alpine AS builder
+# Use official Node.js image
+FROM node:18-alpine
 
 # Set working directory
 WORKDIR /app
 
-# Copy package files first for better caching
-COPY package.json package-lock.json ./
+# Copy package files and install dependencies
+COPY package*.json ./
+RUN npm install
 
-# Install npm version 10.8.2 explicitly
-RUN npm install -g npm@10.8.2
-
-# Install dependencies, ignoring peer dependency conflicts
-RUN npm install --legacy-peer-deps
-
-# Copy the rest of the application
+# Copy the rest of the application code
 COPY . .
 
-# Build the Next.js app
+# Build the app (using npm run build)
 RUN npm run build
 
-# ---- Production Stage ----
-FROM node:20.17.0-alpine AS runner
+# Install 'serve' globally to serve the production build
+RUN npm install -g serve
 
-WORKDIR /app
-
-
-RUN node -v
-RUN npm -v
-
-
-COPY --from=builder /app/.next .next
-COPY --from=builder /app/node_modules node_modules
-COPY --from=builder /app/public public
-COPY --from=builder /app/package.json package.json
-
-
+# Expose the port the app runs on
 EXPOSE 3000
 
-
-ENV NODE_ENV=production
-
-
-CMD ["npm", "run", "start"]
+# Serve the app using the 'dist' folder created by Vite
+CMD ["serve", "-s", "dist", "-l", "3000"]

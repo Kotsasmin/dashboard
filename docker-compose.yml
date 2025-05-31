@@ -1,11 +1,8 @@
-version: "3.8"
-
 services:
-  app:
+  portfolio:
     build: .
-    image: build:latest  
     ports:
       - "3000:3000"
     environment:
-      - NODE_ENV=production
+      - PORT=3000
     restart: unless-stopped
